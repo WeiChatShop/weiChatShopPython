@@ -55,11 +55,24 @@ WSGI_APPLICATION = 'weiChatShopPython.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/1.7/ref/settings/#databases
+# 数据库链接换为mysql数据库
+
+# 原来的配置
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+#     }
+# }
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'weichatshop',
+        'USER':'root',
+        'PASSWORD':'563652043',
+        'HOST':'localhost',
+        'PORT':'3306',
     }
 }
 
@@ -81,3 +94,28 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.7/howto/static-files/
 
 STATIC_URL = '/static/'
+
+#template
+TEMPLATE_DIRS = {
+     os.path.join(BASE_DIR, 'templates/pages/'),
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
