@@ -1,0 +1,17 @@
+.DS_Store
+target/
+out/
+template/
+image/
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+*.class
+*.iml
+.idea/*
+mysql.properties
+settings.py
+

@@ -8,4 +8,5 @@ urlpatterns = patterns('',
     # url(r'^admin/', include(admin.site.urls)),
     url(r'^$','weiChatShopPython.views.firstPage'),
     url(r'^index','weiChatShopPython.views.index'),
+    url(r'^home','weiChatShopPython.views.home'),
 )
