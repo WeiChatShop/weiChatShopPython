@@ -14,5 +14,5 @@ dependency-reduced-pom.xml
 .idea/*
 mysql.properties
 settings.py
-
+.idea/
 
