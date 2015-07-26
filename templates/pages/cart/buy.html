@@ -4,34 +4,34 @@
 	<meta charset="UTF-8"/>
 	<title>立即购买</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
-	<link rel="stylesheet" tylie="text/css" href="../../../style/reset.css?t=57">
-	<link rel="stylesheet" tylie="text/css" href="../../../style/buy.css?t=57">
+	<link rel="stylesheet" tylie="text/css" href="/static/style/reset.css?t=57">
+	<link rel="stylesheet" tylie="text/css" href="/static/style/buy.css?t=57">
 </head>
 <body>
-	<%@include file="../commons/common.html" %>
-	<%@include file="../commons/header.html" %>
+	{% include "common.html" %}
+	{% include "header.html" %}
 	<div class="buyWrap">
 		<!-- 商品详情开始 -->
 		<div class="goodDetailWrap clearfix">
 			<div class="imgWrap fl">
-				<img src="../${onebook.path}">
+				<img src="/static/{{path}}">
 			</div>
 			<div class="desc">
 				<!-- 商品名称开始 -->
 				<h3 class="title">
-					${onebook.name}
+					{{name}}
 				</h3>
 				<!-- 商品名称结束 -->
 				<div class="descPrice">
 					<!-- 商品价格开始 -->
 					<span>单价:</span>￥<span class="price" id="price">
-						${onebook.price}
+						{{ price }}
 					</span>
 					<!-- 商品价格结束 -->
 					<!-- 运费开始 -->
 					<span>运费:</span>
 					<span class="carriage">
-						${onebook.freight}
+						{{ carriage }}
 					</span>
 					<!-- 运费结束 -->
 				</div>
@@ -58,7 +58,7 @@
 				合计:￥ 
 				</span>
 				<div class="lableWrap">
-					<span class="lable" id="total">${onebook.price+onebook.freight}</span>
+					<span class="lable" id="total" style="margin-left:17px">{{price}} +{{ carriage}}</span>
 				</div>
 			</div>
 			<!-- 合计结束 -->
@@ -125,7 +125,7 @@
 			<!-- 其他要求结束 -->
 			<!-- 提交按钮开始 -->
 			<div class="lableWrap">
-				<span class="bugBtn" onclick="buyit(${onebook.id})">确定购买</span>
+				<span class="bugBtn" onclick="buyit('{{id}}')">确定购买</span>
 			</div>
 			<!-- 提交按钮结束 -->
 		</div>

@@ -5,7 +5,7 @@ window.onload = classifyHtml;
 function classifyHtml(){
     var classify = getParam();
     $.ajax({
-        url:"/book/classify/"+classify,
+        url:"/classify/"+classify,
         dataType:'json',
         success:function(data){
             var bookClassList = new Array();
@@ -15,26 +15,25 @@ function classifyHtml(){
                 $("#classify_page").append(data.message);
             }else{
                 bookClassList = data.data;
-                if(bookClassList[0].classifyname!=null){
                     var classStyle='';
-                    if(bookClassList[0].classify_id==1){
+                    if(bookClassList[0][5]==1){
                         classStyle='class="glyphicon glyphicon-phone"'
-                    }else if(bookClassList[0].classify_id==2){
+                    }else if(bookClassList[0][5]==2){
                         classStyle = 'class="glyphicon glyphicon-book"';
                     }
                     $("#classify_page").append('<div id="classifyName" style="padding-top:10px;padding-bottom: 10px">'+
-                    '<a '+classStyle+' id="title">'+bookClassList[0].classifyname+'</a></div>');
-                }
+                    '<a '+classStyle+' id="title">'+bookClassList[0][6]+'</a></div>');
                 for(var i = 0; i<bookClassList.length; i++){
+                    book = bookClassList[i];
                     $("#classify_page").append('<div class="classbox">');
-                    if(bookClassList[i].hot==1){
+                    if(book[4].hot==1){
                         $("#classify_page").append('<div class="hot">' +
                         '<span class="glyphicon glyphicon-fire" style="color: rgb(255, 140, 60);">本周推荐图书</span></div>')
                     }
                     $("#classify_page").append('<div class="titleName"><span class="glyphicon glyphicon-star" style="color: #71F53C;">' +
-                   '</span><a href="/one/'+bookClassList[i].id+'">'+bookClassList[i].name+'</a></div>');
-                    $("#classify_page").append('<div class="describe">'+bookClassList[i].describe+'</div>');
-                    $("#classify_page").append('<div><a class="image-container" href="/one/'+bookClassList[i].id+'"><img src="../../../'+bookClassList[i].path+'"></a></div>');
+                   '</span><a href="/one/'+book[0]+'">'+book[1]+'</a></div>');
+                    $("#classify_page").append('<div class="describe">'+book[2]+'</div>');
+                    $("#classify_page").append('<div><a class="image-container" href="/one/'+book[0]+'"><img src="/static/'+book[3]+'"></a></div>');
                     $("#classify_page").append('</div>');
                 }
             }

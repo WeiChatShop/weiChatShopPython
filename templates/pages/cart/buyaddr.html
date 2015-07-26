@@ -4,34 +4,34 @@
 	<meta charset="UTF-8"/>
 	<title>立即购买</title>
 	<meta name="viewport" content="width=device-width, initial-scale=1.0,user-scalable=no">
-	<link rel="stylesheet" tylie="text/css" href="../../../style/reset.css?t=57">
-	<link rel="stylesheet" tylie="text/css" href="../../../style/buy.css?t=57">
+	<link rel="stylesheet" tylie="text/css" href="/static/style/reset.css?t=57">
+	<link rel="stylesheet" tylie="text/css" href="/static/style/buy.css?t=57">
 </head>
 <body>
-	<%@include file="../commons/common.jsp" %>
-	<%@include file="../commons/header.jsp" %>
+	{% include "common.html" %}
+	{% include "header.html" %}
 	<div class="buyWrap">
 		<!-- 商品详情开始 -->
 		<div class="goodDetailWrap clearfix">
 			<div class="imgWrap fl">
-				<img src="../${onebook.path}">
+				<img src="/static/{{path}}">
 			</div>
 			<div class="desc">
 				<!-- 商品名称开始 -->
 				<h3 class="title">
-					${onebook.name}
+					{{name}}
 				</h3>
 				<!-- 商品名称结束 -->
 				<div class="descPrice">
 					<!-- 商品价格开始 -->
 					<span>单价:</span>￥<span class="price" id="price">
-						${onebook.price}
+						{{price}}
 					</span>
 					<!-- 商品价格结束 -->
 					<!-- 运费开始 -->
 					<span>运费:</span>
 					<span class="carriage">
-						${onebook.freight}
+						{{carriage}}
 					</span>
 					<!-- 运费结束 -->
 				</div>
@@ -58,7 +58,7 @@
 				合计:￥
 				</span>
 				<div class="lableWrap">
-					<span class="lable" id="total">${onebook.price+onebook.freight}</span>
+					<span class="lable" id="total" style="margin-left:17px">{{price}}+{{carriage}}</span>
 				</div>
 			</div>
 			<!-- 合计结束 -->
@@ -68,25 +68,25 @@
 		<!-- 收货地址开始 -->
 		<div class="addrWrap clearfix">
 			<div class="imgWrap fl">
-				<img src="../../../images/book/banner/map.png">
+				<img src="/static/images/book/banner/map.png">
 			</div>
 			<div class="desc">
 				<!-- 基本信息开始 -->
 				<div>
 					<span class="lable" id="name">
-						收货人:${cart.name}
+						收货人:{{username}}
 					</span>
 					<span><button class="glyphicon glyphicon-edit" onclick="editAddr()"style="float:right;width:100px;height:auto">修改</button></span>
 				</div>
 				<div>
 					<span class="lable" id="phone">
-						电话:${cart.phone}
+						电话:{{phone}}
 					</span>
 				</div>
 				<!-- 基本信息结束-->
 				<!-- 具体地址开始 -->
 				<div class="address" id="addr">
-					收货地址:${cart.province},${cart.detail_addr}
+					收货地址:{{province}},{{detail_addr}}
 				</div>
 				<!-- 具体地址结束 -->
 			</div>
@@ -94,7 +94,7 @@
 		<!-- 收货地址结束 -->
 		<!-- 提交按钮开始 -->
 		<div class="lableWrap">
-			<span class="bugBtn" onclick="buyit(${onebook.id})">确定购买</span>
+			<span class="bugBtn" onclick="buyit('{{id}}')">确定购买</span>
 		</div>
 		<!-- 提交按钮结束 -->
 
@@ -106,7 +106,7 @@
 					收货人：
 				</span>
 			<div class="inputWrap">
-				<input type="text" id="edname" placeholder="请填写收货人姓名" value="${cart.name}"/>
+				<input type="text" id="edname" placeholder="请填写收货人姓名" value="{{username}}"/>
 			</div>
 		</div>
 		<!-- 收货人结束 -->
@@ -116,7 +116,7 @@
 					联系电话：
 				</span>
 			<div class="inputWrap">
-				<input type="text" id="edphone" placeholder="请填联系电话" value="${cart.phone}"/>
+				<input type="text" id="edphone" placeholder="请填联系电话" value="{{phone}}"/>
 			</div>
 		</div>
 		<!-- 联系电话开始 -->
@@ -126,7 +126,7 @@
 					地区：
 				</span>
 			<div class="inputWrap">
-				<input type="text" id="address" placeholder="请填省、市、县" value="${cart.province}"/>
+				<input type="text" id="address" placeholder="请填省、市、县" value="{{province}}"/>
 			</div>
 		</div>
 		<!-- 地区结束 -->
@@ -136,7 +136,7 @@
 					详细地址：
 				</span>
 			<div class="inputWrap">
-				<input type="text" id="detail_addr" placeholder="请填写详细地址" value="${cart.detail_addr}"/>
+				<input type="text" id="detail_addr" placeholder="请填写详细地址" value="{{detail_addr}}"/>
 			</div>
 		</div>
 		<!-- 详细地址结束 -->
@@ -146,7 +146,7 @@
 					邮政编码：
 				</span>
 			<div class="inputWrap">
-				<input type="text" id="postCode" placeholder="选填" value="${cart.postalcode}"/>
+				<input type="text" id="postCode" placeholder="选填" value="{{postalcode}}"/>
 			</div>
 		</div>
 		<!-- 邮政编码开始 -->
@@ -156,12 +156,12 @@
 					其他要求：
 				</span>
 			<div class="inputWrap">
-				<input type="text" id="require" placeholder="选填" value="${cart.require}"/>
+				<input type="text" id="require" placeholder="选填" value="{{require}}"/>
 			</div>
 		</div>
 		<!-- 提交按钮开始 -->
 		<div class="lableWrap">
-			<span class="bugBtn" style="background-color:#8bc344" onclick="editSub(${onebook.id})">确定修改</span>
+			<span class="bugBtn" style="background-color:#8bc344" onclick="editSub('{{addrid}}')">确定修改</span>
 		</div>
 		<!-- 提交按钮结束 -->
 	</div>
@@ -229,7 +229,7 @@
 			$.ajax({
 				url: "/editcart",
 				dataType: 'json',
-				type:"post",
+				type:"get",
 				data:{name:name,phone:phone,province:province,
 					city:province,detail_addr:detail_addr,postCode:postCode,require:require,book_id:id},
 				success: function (data) {
