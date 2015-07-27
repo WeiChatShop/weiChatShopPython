@@ -58,7 +58,7 @@
 				合计:￥
 				</span>
 				<div class="lableWrap">
-					<span class="lable" id="total" style="margin-left:17px">{{price}}+{{carriage}}</span>
+					<span class="lable" id="total" style="margin-left:25px">{{price}}+{{carriage}}</span>
 				</div>
 			</div>
 			<!-- 合计结束 -->
@@ -198,7 +198,7 @@
 			$.ajax({
 				url: "/buyitaddr",
 				dataType: 'json',
-				type:"post",
+				type:"get",
 				data:{total:total,num:num,book_id:id},
 				success: function (data) {
 					if(data.status==0){

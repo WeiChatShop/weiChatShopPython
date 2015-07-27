@@ -1,5 +1,6 @@
 from urllib import request
 from django.db import connection,transaction
+from weiChatShopPython.myapp.models import BookCart
 
 __author__ = 'xiaoming'
 #得到buid
@@ -46,4 +47,32 @@ def updateAddr(addr):
             return True;
     except:
         return False;
+def cartInsert(cartInfo):
+    insertSQL = 'insert into book_cart(uid,addr_id,book_id,num,should_pay,addip,addtime)'\
+                ' values(%s,%s,%s,%s,%s,%s,%s)'
+    try:
+        with transaction.atomic():
+            cursor = connection.cursor();
+            raw = cursor.execute(insertSQL,[cartInfo['buid'],cartInfo['addr_id'],cartInfo['book_id'],cartInfo['num'],
+                                      cartInfo['total'],cartInfo['addip'],cartInfo['addtime']]);
+            transaction.commit_unless_managed();
+            return raw;
+    except:
+        return None;
 
+def cartDataList(buid):
+    cartListSQL = 'select bc.id,bc.uid,bc.book_id,bc.num,bc.should_pay,bi.price,bi.path,bi.name,bi.describe'\
+                        ',bi.freight from book_cart bc left join book_info bi on bc.book_id=bi.id  where bc.uid=%s and bc.payment<=0'
+    cursor = connection.cursor();
+    cursor.execute(cartListSQL,[buid]);
+    bookCart = cursor.fetchall();
+    return bookCart;
+def getCart(id,buid):
+    getCartSQL = "select bc.id as cart_id ,bc.should_pay,bc.num,bi.price ," \
+                "bc.addtime,bc.send_status,bi.freight,bi.name,bi.path,ui.name as realname," \
+                "ui.id as ui_id,ui.phone,ui.province,ui.detail_addr from book_cart bc left join book_info bi " \
+                "on bc.book_id=bi.id left join user_info ui on bc.uid=ui.uid where bc.id=%s and bc.uid=%s limit 1";
+    cursor = connection.cursor();
+    cursor.execute(getCartSQL,[id,buid]);
+    bookCart = cursor.fetchall();
+    return bookCart;

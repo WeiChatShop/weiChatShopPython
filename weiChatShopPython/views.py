@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from urllib import request
-from weiChatShopPython.service import getOneBook, getUserAddr, getBuid
+from weiChatShopPython.service import getOneBook, getUserAddr, getBuid, getCart
 
 __author__ = 'xiaoming'
 
@@ -45,6 +45,18 @@ def buynow(request, id):
              'carriage': oneBook[0][3], 'addrid':addr[0][0],'username':addr[0][2],
              'phone':addr[0][3],'province':addr[0][4],'detail_addr':addr[0][6],
              'postalcode':addr[0][7],'require':addr[0][8]});
+def payView(request,id):
+    buid = getBuid(request);
+    cart = getCart(id,buid);
+    if cart is not None:
+        return render_to_response('cart/pay.html',{'cart':{
+           'cart_id':cart[0][0],'should_pay':cart[0][1],'num':cart[0][2],'price':cart[0][3],
+           'freight':cart[0][5],'name':cart[0][7],'path':cart[0][8],'realname':cart[0][8],'phone':cart[0][10],
+           'province':cart[0][11],'detail_addr':cart[0][12]
+        }})
+
+def cartList(request):
+    return render_to_response('cart/cart.html');
 
 
 
