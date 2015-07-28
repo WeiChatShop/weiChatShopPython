@@ -204,7 +204,7 @@
 					if(data.status==0){
 						alert(data.message);
 					}else if(data.status==1){
-						window.location.href = "/pay/"+data.data;
+						window.location.href = "/pay";
 					}
 				}
 			})
@@ -212,6 +212,11 @@
 		function editAddr(){
 			$(".buyWrap").css("display","none");
 			$(".editAddr").css("display","block");
+		}
+
+        function cancel(){
+			$(".buyWrap").css("display","block");
+			$(".editAddr").css("display","none");
 		}
 
 		function editSub(id){

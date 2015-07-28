@@ -2,7 +2,7 @@
 import datetime
 from django.core import serializers
 import simplejson
-from weiChatShopPython.service import updateAddr, getRealIP, getBuid, cartInsert, cartDataList
+from weiChatShopPython.service import updateAddr, getRealIP, getBuid, cartInsert, cartDataList, addrInsert
 
 __author__ = 'xiaoming'
 from django.http import HttpResponse
@@ -67,4 +67,33 @@ def cartList(request):
     else:
         return HttpResponse(simplejson.dumps({'status': '0', 'message':'请您先去购物吧!','data':bookCartList},
                                   ensure_ascii=False), content_type='application/json');
-
+def buyIt(request):
+    buid = getBuid(request);
+    addtime = datetime.datetime.now();
+    IP = getRealIP(request);
+    cartInfo = {};
+    cartInfo['addr_id'] = request.REQUEST.get('addr_id',0);
+    cartInfo['book_id'] = request.REQUEST.get('book_id',1);
+    cartInfo['num'] = request.REQUEST.get('num',1);
+    cartInfo['total'] = request.REQUEST.get('total',0);
+    cartInfo['addip'] = IP;
+    cartInfo['addtime'] = addtime;
+    cartInfo['buid'] = buid;
+    addrInfo = {};
+    addrInfo['buid'] = buid;
+    addrInfo['name'] = request.REQUEST.get('name',0);
+    addrInfo['phone'] = request.REQUEST.get('phone',0);
+    addrInfo['province']= request.REQUEST.get('province',0);
+    addrInfo['city']= request.REQUEST.get('province',0);
+    addrInfo['detail_addr']= request.REQUEST.get('detail_addr',0);
+    addrInfo['addip']= IP;
+    addrInfo['addtime'] = addtime;
+    addrInfo['require']= request.REQUEST.get('require',0);
+    addrInfo['postalcode']= request.REQUEST.get('postCode',0);
+    addrInsert(addrInfo);
+    status = cartInsert(cartInfo);
+    if status is None:
+        return HttpResponse(simplejson.dumps({'status': '0', 'message':'购买失败!','data':""},
+                                  ensure_ascii=False), content_type='application/json');
+    return HttpResponse(simplejson.dumps({'status': '1', 'message':'成功!','data':""},
+                                  ensure_ascii=False), content_type='application/json');

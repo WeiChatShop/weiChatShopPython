@@ -67,12 +67,26 @@ def cartDataList(buid):
     cursor.execute(cartListSQL,[buid]);
     bookCart = cursor.fetchall();
     return bookCart;
-def getCart(id,buid):
+def getCart(buid):
     getCartSQL = "select bc.id as cart_id ,bc.should_pay,bc.num,bi.price ," \
                 "bc.addtime,bc.send_status,bi.freight,bi.name,bi.path,ui.name as realname," \
                 "ui.id as ui_id,ui.phone,ui.province,ui.detail_addr from book_cart bc left join book_info bi " \
-                "on bc.book_id=bi.id left join user_info ui on bc.uid=ui.uid where bc.id=%s and bc.uid=%s limit 1";
+                "on bc.book_id=bi.id left join user_info ui on bc.uid=ui.uid  where bc.uid=%s order by bc.id desc limit 1";
     cursor = connection.cursor();
-    cursor.execute(getCartSQL,[id,buid]);
+    cursor.execute(getCartSQL,[buid]);
     bookCart = cursor.fetchall();
     return bookCart;
+
+def addrInsert(addrInfo):
+    addrSQL = "insert into `user_info` (uid,`name`,`phone`,`province`," \
+                "`city`,`detail_addr`,`addip`,`addtime`,`require`,`postalcode`)values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s)";
+    try:
+        with transaction.atomic():
+            cursor = connection.cursor();
+            raw = cursor.execute(addrSQL,[addrInfo['buid'],addrInfo['name'],addrInfo['phone'],addrInfo['province'],
+                                      addrInfo['city'],addrInfo['detail_addr'],addrInfo['addip'],
+                                      addrInfo['addtime'],addrInfo['require'],addrInfo['postalcode']]);
+            transaction.commit_unless_managed();
+            return raw;
+    except:
+        return None;

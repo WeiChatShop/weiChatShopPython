@@ -171,14 +171,14 @@
 			$.ajax({
 				url: "/buyit",
 				dataType: 'json',
-				type:"post",
+				type:"get",
 				data:{total:total,name:name,phone:phone,num:num,province:province,
 					city:province,detail_addr:detail_addr,postCode:postCode,require:require,book_id:id},
 				success: function (data) {
 					if(data.status==0){
 						alert(data.message);
 					}else if(data.status==1){
-						window.location.href = "/cart";
+						window.location.href = "/pay";
 					}
 				}
 			})
